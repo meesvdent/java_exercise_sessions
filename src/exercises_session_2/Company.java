@@ -2,7 +2,7 @@ package exercises_session_2;
 
 public class Company {
 
-    // variable initialization
+    // variable decleration
     String companyName, location;
     static String compareLocation = "Belgium";
 
