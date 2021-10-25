@@ -5,7 +5,7 @@ public class DistanceConverter {
     public DistanceConverter() {
     }
     // method to calculate the BMI
-    public double convert(double dist_miles) {
+    public static double convert(double dist_miles) {
         // define conversion factor
         double oneMileInKM = 1.609;
         // conversion
