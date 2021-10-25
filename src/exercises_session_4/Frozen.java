@@ -4,7 +4,7 @@ public class Frozen {
 
     public static void main (String [] args){
 
-    int [] clientid = {1,2,3,4,5};
+    int [] clientId = {1,2,3,4,5};
     String [] clientName = {"Anna", "Elsa", "Olaf", "Hans", "Kristoff"};
     double [] accountBalance = {1000, 5000, 9, 55, 23};
 
