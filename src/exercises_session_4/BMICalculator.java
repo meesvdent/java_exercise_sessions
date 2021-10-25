@@ -1,20 +1,27 @@
 package exercises_session_4;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Locale;
 
 public class BMICalculator {
     // Main method
     public static void main(String[] args){
         // declare variables
-        double weight;
-        double height;
         // set variables
-        weight = askDouble();
-        height = askDouble();
-        // calculate BMI
-        double BMI = calculateBMI(weight,height);
-        // print to screen
-        System.out.println("Your BMI is " + BMI + ".");
+        try{
+            System.out.println("Enter person weight: ");
+            double weight = inputDouble();
+            System.out.println("Enter person height: ");
+            double height = inputDouble();
+            // calculate BMI
+            double BMI = calculateBMI(weight, height);
+            // print to screen
+            System.out.println("Your BMI is " + BMI + ".");
+        } catch(InputMismatchException im){
+            System.out.println("Arguments for weight and height should be double!");
+            main(null);
+        }
     }
 
     // method calculating BMI
@@ -24,12 +31,10 @@ public class BMICalculator {
         return BMI;
     }
 
-    public static double askDouble(){
-        double askDouble;
-        Scanner scan = new Scanner(System.in);
-        askDouble = scan.nextDouble();
-
-        return askDouble;
+    public static double inputDouble(){
+        double input_double;
+        Scanner scan = new Scanner(System.in).useLocale(Locale.US);
+        input_double = scan.nextDouble();
+        return input_double;
     }
-
 }
