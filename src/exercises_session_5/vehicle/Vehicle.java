@@ -1,4 +1,4 @@
-package exercisses_session_5.vehicle;
+package exercises_session_5.vehicle;
 
 public abstract class Vehicle {
 

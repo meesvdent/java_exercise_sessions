@@ -1,4 +1,4 @@
-package exercisses_session_5;
+package exercises_session_5;
 
 public class Building {
 
