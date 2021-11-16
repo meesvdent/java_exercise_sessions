@@ -1,4 +1,4 @@
 muffin, price
-blueberry, 3
+blueberry, 3.0
 chocolate, 2.50
 red velvet, 3.50
