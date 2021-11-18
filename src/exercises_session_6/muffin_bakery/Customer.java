@@ -15,4 +15,13 @@ public class Customer {
     public String getName() {
         return name;
     }
+
+    public void addOrder(Order order){
+        this.orders.add(order);
+    }
+
+    public ArrayList<Order> getOrders(){
+        return this.orders;
+    }
+
 }
