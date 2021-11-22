@@ -1,0 +1,2 @@
+type, question, answer
+numeric, How high is mount everest, 8849

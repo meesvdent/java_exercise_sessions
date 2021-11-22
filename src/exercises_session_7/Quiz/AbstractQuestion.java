@@ -1,5 +1,9 @@
 package exercises_session_7.Quiz;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Objects;
+
 public abstract class AbstractQuestion implements Question{
 
     protected String question;
@@ -23,5 +27,6 @@ public abstract class AbstractQuestion implements Question{
     public boolean checkAnswer(String input){
         return this.answer.equals(input);
     }
+
 
 }
