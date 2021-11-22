@@ -18,7 +18,6 @@ public class MuffinBakery {
     }
 
     public Integer existsCustomer(String customerName){
-        boolean notUnique = false;
         for(int i=0; i<this.customers.size(); i++){
             if(this.customers.get(i).getName().equals(customerName)){
                 return i;
@@ -40,7 +39,7 @@ public class MuffinBakery {
         return addedCustomer;
     }
 
-    public ArrayList<Customer> getCustomers(){
+    public ArrayList<Customer> getCustomer(){
         return this.customers;
     }
 
@@ -49,10 +48,9 @@ public class MuffinBakery {
     }
 
     public void readPrices(String filename){
-        String header = null;
         ArrayList<Muffin> muffins = new ArrayList<>();
         try(Scanner scan = new Scanner(new FileReader(filename))){
-            header = scan.nextLine();
+            scan.nextLine();
             while(scan.hasNextLine()){
                 String line = scan.nextLine();
                 Scanner lineScan = new Scanner(line).useLocale(Locale.US);
@@ -68,10 +66,8 @@ public class MuffinBakery {
     }
 
     public void readOrders(String filename){
-        String header = null;
         try(Scanner scan = new Scanner(new FileReader(filename));){
-            header = scan.nextLine();
-            System.out.println(header);
+            scan.nextLine();
             while (scan.hasNextLine()){
 
                 // Read next line
@@ -93,6 +89,19 @@ public class MuffinBakery {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void totalMuffin(Muffin muffinType){
+        for(Muffin muffin : this.muffins){
+            Integer total = 0;
+            for(Customer customer : this.getCustomer()){
+                for(Order order : customer.getOrders()){
+                    if(order.getMuffin() == muffin){
+                        total += order.getAmount();
+                    }
+                }
+            }
         }
     }
 
