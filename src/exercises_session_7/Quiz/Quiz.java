@@ -36,7 +36,29 @@ public class Quiz {
                     System.out.println(currentLine);
 
                     if(questionType.equals("multiplechoice")){
-                        try{questions.add(MultiplechoiceQuestion.parseQuestionString(currentLine));
+                        try{
+                            ArrayList<String> questionElements= MultiplechoiceQuestion.parseQuestion(currentLine);
+                            String question = questionElements.get(0);
+                            String answer = questionElements.get(1);
+                            ArrayList<String> options = new ArrayList<String>(questionElements.subList(2, questionElements.size()));
+                            questions.add(new MultiplechoiceQuestion(question, answer, options));
+                        } catch(NullPointerException e){
+                            e.printStackTrace();
+                        }
+                    }
+                    if(questionType.equals("text")){
+                        try{
+                            ArrayList<String> questionElements = TextQuestion.parseQuestionString(currentLine);
+                            String question = questionElements.get(0);
+                            String answer = questionElements.get(1);
+                            questions.add(new TextQuestion(question, answer));
+                        } catch (NullPointerException e){
+                            e.printStackTrace();
+                        }
+                    }
+                    if(questionType.equals("numeric")){
+                        try{
+                            questions.add(NumericQuestion.parseQuestionString(currentLine));
                         } catch(NullPointerException e){
                             e.printStackTrace();
                         }

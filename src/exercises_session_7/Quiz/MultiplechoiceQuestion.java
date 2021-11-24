@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MultiplechoiceQuestion extends AbstractQuestion{
+
     private final String type = "multiplechoice";
     ArrayList<String> options;
 
@@ -13,16 +14,7 @@ public class MultiplechoiceQuestion extends AbstractQuestion{
         this.options = options;
     }
 
-    @Override
-    public String getType() {
-        return type;
-    }
-
-    public ArrayList<String> getOptions(){
-        return this.options;
-    }
-
-    public static MultiplechoiceQuestion parseQuestionString(String line){
+    public static ArrayList<String> parseQuestion(String line){
         Scanner lineScanner = new Scanner(line);
         lineScanner.useDelimiter(", ");
         String question = lineScanner.next();
@@ -34,8 +26,22 @@ public class MultiplechoiceQuestion extends AbstractQuestion{
             options.add(lineScanner.next());
         }
 
-        MultiplechoiceQuestion currentQuestion = new MultiplechoiceQuestion(question, answer, options);
+        ArrayList<String> questionElements = new ArrayList<>();
+        questionElements.add(question);
+        questionElements.add(answer);
+        questionElements.addAll(options);
 
-        return currentQuestion;
+        return questionElements;
+
     }
+
+    @Override
+    public String getType() {
+        return type;
+    }
+
+    public ArrayList<String> getOptions(){
+        return this.options;
+    }
+
 }

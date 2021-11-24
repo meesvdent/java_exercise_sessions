@@ -1,5 +1,8 @@
 package exercises_session_7.Quiz;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class NumericQuestion extends AbstractQuestion{
 
     double answer;
@@ -17,5 +20,12 @@ public class NumericQuestion extends AbstractQuestion{
 
     public boolean checkAnswer(double input){
         return this.answer == input;
+    }
+
+    public static NumericQuestion parseQuestionString(String line){
+        Scanner lineScanner = new Scanner(line);
+        String question = lineScanner.next();
+        double answer = lineScanner.nextDouble();
+        return new NumericQuestion(question, answer);
     }
 }
