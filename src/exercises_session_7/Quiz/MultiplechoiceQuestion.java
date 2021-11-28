@@ -1,6 +1,7 @@
 package exercises_session_7.Quiz;
 
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,11 +15,11 @@ public class MultiplechoiceQuestion extends AbstractQuestion{
         this.options = options;
     }
 
-    public static ArrayList<String> parseQuestion(String line){
+    public static MultiplechoiceQuestion parseQuestion(String line){
         Scanner lineScanner = new Scanner(line);
         lineScanner.useDelimiter(", ");
         String question = lineScanner.next();
-        String answer = lineScanner.next();
+        String answer = lineScanner.next().toLowerCase();
 
         // Loop through multiple choice options at end of line
         ArrayList<String> options = new ArrayList<String>();
@@ -26,12 +27,9 @@ public class MultiplechoiceQuestion extends AbstractQuestion{
             options.add(lineScanner.next());
         }
 
-        ArrayList<String> questionElements = new ArrayList<>();
-        questionElements.add(question);
-        questionElements.add(answer);
-        questionElements.addAll(options);
+        MultiplechoiceQuestion newQuestion = new MultiplechoiceQuestion(question, answer, options);
 
-        return questionElements;
+        return newQuestion;
 
     }
 
@@ -42,6 +40,15 @@ public class MultiplechoiceQuestion extends AbstractQuestion{
 
     public ArrayList<String> getOptions(){
         return this.options;
+    }
+
+    public boolean askQuestion(Scanner scan){
+        System.out.println(this.getQuestion());
+        System.out.println("Your options are:");
+        System.out.println(this.getOptions());
+        System.out.println("Which answer do you choose?");
+        String userAnswer = scan.next();
+        return this.checkAnswer(userAnswer);
     }
 
 }

@@ -4,10 +4,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Quiz {
+
+    ArrayList<AbstractQuestion> questions;
+
+    public Quiz(String questionFolder){
+        ArrayList<String> questionFiles = this.listQuestionFiles(questionFolder, new ArrayList<>());
+        this.questions = new ArrayList<>(this.parseQuestions(questionFiles));
+    }
 
     public ArrayList<String> listQuestionFiles(String questionFolder, ArrayList<String> questionFileList){
         final File folder = new File(questionFolder);
@@ -21,7 +29,7 @@ public class Quiz {
         return questionFileList;
     }
 
-    public void ParseQuestions(ArrayList<String> questionFiles){
+    public ArrayList<AbstractQuestion> parseQuestions(ArrayList<String> questionFiles){
 
         ArrayList<AbstractQuestion> questions = new ArrayList<>();
 
@@ -31,27 +39,18 @@ public class Quiz {
                 while(questionScanner.hasNextLine()){
                     questionScanner.useDelimiter(", ");
                     String questionType = questionScanner.next();
-                    System.out.println(questionType);
                     String currentLine = questionScanner.nextLine();
-                    System.out.println(currentLine);
 
                     if(questionType.equals("multiplechoice")){
                         try{
-                            ArrayList<String> questionElements= MultiplechoiceQuestion.parseQuestion(currentLine);
-                            String question = questionElements.get(0);
-                            String answer = questionElements.get(1);
-                            ArrayList<String> options = new ArrayList<String>(questionElements.subList(2, questionElements.size()));
-                            questions.add(new MultiplechoiceQuestion(question, answer, options));
+                            questions.add(MultiplechoiceQuestion.parseQuestion(currentLine));
                         } catch(NullPointerException e){
                             e.printStackTrace();
                         }
                     }
                     if(questionType.equals("text")){
                         try{
-                            ArrayList<String> questionElements = TextQuestion.parseQuestionString(currentLine);
-                            String question = questionElements.get(0);
-                            String answer = questionElements.get(1);
-                            questions.add(new TextQuestion(question, answer));
+                            questions.add(TextQuestion.parseQuestionString(currentLine));
                         } catch (NullPointerException e){
                             e.printStackTrace();
                         }
@@ -68,20 +67,38 @@ public class Quiz {
                 e.printStackTrace();
             } ;
         }
+        System.out.println(questions.size());
 
-        System.out.println("Length: " + questions.size());
         for(AbstractQuestion question : questions){
             System.out.println(question.getQuestion());
             if(question.getType().equals("multiplechoice")){
                 System.out.println(((MultiplechoiceQuestion) (question)).getOptions());
             }
         }
+
+        return questions;
+    }
+
+    public void quiz(){
+        int score = 0;
+        System.out.println("Welcome to my Java quiz! Here is your first question:");
+        try(Scanner scan = new Scanner(System.in)) {
+            scan.useLocale(Locale.US);
+            for (AbstractQuestion question : this.questions) {
+                boolean correct = question.askQuestion(scan);
+                if (correct) {
+                    System.out.println("Your answer is correct!");
+                    score++;
+                } else {
+                    System.out.println("Your answer is not correct :(");
+                }
+            }
+        }
+        System.out.println("Final score: " + score);
     }
 
     public static void main(String[] args) {
-        Quiz testQuiz = new Quiz();
-        ArrayList<String> fileList = testQuiz.listQuestionFiles("src/exercises_session_7/Quiz/Questions", new ArrayList<String>());
-        System.out.println(fileList);
-        testQuiz.ParseQuestions(fileList);
+        Quiz testQuiz = new Quiz("src/exercises_session_7/Quiz/Questions");
+        testQuiz.quiz();
     }
 }
